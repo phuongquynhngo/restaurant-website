@@ -1,0 +1,27 @@
+.header-wrapper {
+    background: #7d9cc7;
+    min-height: 4.5rem;
+    width: 100%;
+    border: 2px solid black;
+    z-index: 1;
+    box-sizing: border-box;
+    padding: 2rem;
+    display: flex;
+    align-items: top;
+    justify-content: space-between;
+    .logo-name{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        .logo{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid black;
+            border-radius: 5%;
+            width: 5rem ;
+            height: 5rem;
+        }
+    }
+  }
+  
