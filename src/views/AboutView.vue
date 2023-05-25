@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p>About View</p>
+    <h1>About View</h1>
   </div>
 </template>
 <script setup lang="ts"></script>

@@ -1,0 +1,75 @@
+.divider-wrapper {
+    position: relative;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+  
+    .divider-content, .divider-content.left {
+      position: absolute;
+      left: var(--content-left, 1.25rem);
+      top: var(--content-top, 50%);
+      right: var(--content-right, unset);
+      transform: translate(var(--content-x, 0), var(--content-y, calc(-50% - 1px)));
+      padding: .25rem;
+      font-weight: 600;
+      background: var(--color-background);
+  
+      &.center {
+        --content-left: 50%;
+        --content-x: -50%;
+      }
+  
+      &.right {
+        right: 1.25rem !important;
+        left: unset !important;
+      }
+  
+      &.top {
+        top: 1.25rem !important;
+        left: 50%;
+        --content-x: -50%;
+        --content-y: 0;
+      }
+  
+      &.bottom {
+        bottom: 1.25rem !important;
+        left: 50%;
+        --content-x: -50%;
+        --content-y: 0;
+      }
+    }
+  
+    .divider {
+      margin: 1.25rem 0;
+      border-style: solid;
+      border-color: var(--divider-clr, rgba(55, 65, 81, 1)) !important;
+      border-width: 1px;
+      border-bottom: none;
+      border-right: none;
+      border-left: none;
+  
+      &.vertical {
+        height: 100%;
+        margin: 0 1.25rem;
+        border-top: 0px transparent;
+        border-bottom: 0px transparent;
+        border-right: 0px transparent;
+        border-left: 1px;
+        width: 0;
+        overflow: hidden;
+      }
+  
+      &.dotted {
+        border-style: dotted !important;
+      }
+  
+      &.dashed {
+        border-style: dashed !important;
+      }
+  
+      &.no-margin {
+        margin: 0 !important;
+      }
+    }
+  }
+  
