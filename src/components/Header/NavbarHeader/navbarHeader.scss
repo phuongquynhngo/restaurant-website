@@ -1,13 +1,15 @@
 .navbar-header-wrapper{
     background-color: #155264;
+    // background-color: rgba(0, 0, 0, 0.55);
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
-    bottom: 5rem; // heihgt of footer
+    bottom: 0; // heihgt of footer
     padding: 2rem; 
     display: flexbox;
     transition: box-shadow 0.4s ease-in-out;
+    border: 2px solid white;
     .close-icon-wrapper {
         display: flex;
         align-items: center;
@@ -29,7 +31,15 @@
       }
     .navbar-header-items{
         
-        .navbar-header-item {
+        .navbar-header-item{
+            padding: 0 0.5rem ;
+            transition: all 0.25s ease-in-out;
+            cursor: pointer;
+            &:hover{
+               background-color: #fe6f3b;
+               }
+        
+        .navbar-header-item-label{
             // To style the RouterLink component: the styles must applied directly to the <RouterLink> element itself
             text-decoration: none;
             font-family:sans-serif;
@@ -37,15 +47,11 @@
             font-weight: 750;
             color: #fff;
             line-height:2;
-            cursor: pointer;
             user-select: none;
-            transition: all 0.25s ease-in-out;
-           &:hover{
-            color:#FE6F3B;
-           }
+    
         }
        
-      }
+      }}
    
       
 }

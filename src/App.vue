@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import { useRoute } from "vue-router";
+import Header from "./components/Header/Header.vue";
 
 const route = useRoute();
 </script>
 
 <template>
 <div class="container">
+  <Header />
     <RouterView />
     
   </div>

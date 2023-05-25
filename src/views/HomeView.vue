@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <Header />
+    <!-- <Header /> -->
     <div>
       <p>Hallo</p>
     </div>
@@ -9,7 +9,7 @@
 </template>
 <script setup lang="ts">
 import Footer from "../components/Footer/Footer.vue";
-import Header from "../components/Header/Header.vue";
+// import Header from "../components/Header/Header.vue";
 </script>
 <style scoped lang="scss">
 .wrapper{
