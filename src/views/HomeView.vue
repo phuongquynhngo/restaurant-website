@@ -1,15 +1,13 @@
 <template>
   <div class="wrapper">
-    <!-- <Header /> -->
-    <div>
-      <p>Hallo</p>
-    </div>
+    <NavbarMenu />
+    
     <Footer/>
   </div>
 </template>
 <script setup lang="ts">
 import Footer from "../components/Footer/Footer.vue";
-// import Header from "../components/Header/Header.vue";
+import NavbarMenu from "../components/NavbarMenu/NavbarMenu.vue";
 </script>
 <style scoped lang="scss">
 .wrapper{

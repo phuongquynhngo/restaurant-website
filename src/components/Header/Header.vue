@@ -1,5 +1,6 @@
 <template>
   <div class="header-wrapper">
+  <div class="header-container">
     <div class="logo-name">
       <div class="logo">
       <img src="../../assets/photos/logo.jpg" alt=""></div>
@@ -11,6 +12,7 @@
     </div>
     <div @click="isActive = true"><MenuIcon  class="sidebar-icon" /></div>
   </div>
+</div>
   <div class="navbar-header" v-show="isActive"> <NavbarHeader  @close="isActive = false" /></div>
 </template>
 <script setup lang="ts">

@@ -1,0 +1,64 @@
+.navbar-menu-wrapper {
+  box-sizing: border-box;
+  background-color: #f6f1db;
+  // background-color: #fff;
+  display: flex;
+  flex-flow: column;
+  overflow: hidden;
+  // width: 100%;
+  // width: 250px;
+  padding: 1rem 1rem;
+  cursor: pointer;
+  user-select: none;
+  .slider-container {
+    display: flex;
+    align-items: center;
+    overflow-x: auto;
+    .slider-button{
+      &.next{
+        margin-left: 0.25rem;
+        &:hover svg{
+          fill: #fe6f3b!important;;
+        }
+      }
+      &.prev{
+        margin-right: 0.25rem;
+        &:hover svg{
+          fill: #fe6f3b!important;;
+        }
+      }
+    }
+    .c-tags {
+      color: #fff;
+      display: flex;
+      align-items: center;
+      overflow: auto;
+      scrollbar-width: none; //hide scrollbar for firefox
+      -ms-overflow-style: none;
+
+      /* hide scrollbar for IE 10+ */
+      &::-webkit-scrollbar {
+        display: none;
+      }
+
+      & > * + * {
+        //select all the sibling element that COME AFTER the first child element of the parent element c-tags
+        margin-left: 0.5rem;
+      }
+
+      .tag {
+        //flex: 1 auto auto; //make tags automatically resize to fit in parent div
+        user-select: all;
+        background: var(--tag-bg, #3e546a);
+        font-size: 1rem;
+        padding: 0.3rem 0.5rem;
+        white-space: nowrap;
+        border-radius: 100vmax;
+        user-select: none;
+        &:hover {
+          background-color: #fe6f3b;
+        }
+      }
+    }
+  }
+}
