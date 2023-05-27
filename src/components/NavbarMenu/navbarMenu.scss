@@ -1,4 +1,5 @@
 .navbar-menu-wrapper {
+  
   box-sizing: border-box;
   background-color: #f6f1db;
   // background-color: #fff;
@@ -19,13 +20,13 @@
       &.next{
         margin-left: 0.25rem;
         &:hover svg{
-          fill: #fe6f3b!important;;
+          fill:  #e46335!important;;
         }
       }
       &.prev{
         margin-right: 0.25rem;
         &:hover svg{
-          fill: #fe6f3b!important;;
+          fill:  #e46335!important;;
         }
       }
     }
@@ -57,7 +58,7 @@
         border-radius: 100vmax;
         user-select: none;
         &:hover {
-          background-color: #fe6f3b;
+          background-color: #e46335;
         }
       }
     }
