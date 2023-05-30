@@ -11,6 +11,10 @@
   align-items: center;
   background-color: #155264;
   color: white;
+  &:hover{
+    background-color:#104150;
+
+  }
   .cart-icon {
     position: absolute;
     left: 2rem;

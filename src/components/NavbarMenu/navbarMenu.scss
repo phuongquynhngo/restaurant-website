@@ -10,7 +10,6 @@
   // width: 250px;
   padding: 1rem 1rem;
   margin-bottom: 1rem;
-  cursor: pointer;
   user-select: none;
   .slider-container {
     display: flex;
@@ -31,6 +30,7 @@
       }
     }
     .c-tags {
+      cursor: pointer;
       color: #fff;
       display: flex;
       align-items: center;
@@ -51,7 +51,7 @@
       .tag {
         //flex: 1 auto auto; //make tags automatically resize to fit in parent div
         user-select: all;
-        background: var(--tag-bg, #3e546a);
+        background: #155264;
         font-size: 1rem;
         padding: 0.3rem 0.5rem;
         white-space: nowrap;
