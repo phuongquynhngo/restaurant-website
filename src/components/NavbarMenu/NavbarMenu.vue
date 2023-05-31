@@ -11,8 +11,9 @@
           :key="categoryName"
           ref="categoryTags"
           @click="focusCategory(category.id)"
-          >{{ category.name }}</span
-        >
+          :class="{ focused: focusedCategory === category.id }"
+          >{{ category.name }}
+        </span>
       </div>
       <div v-if="showNextButton" class="slider-button next" @click="slideNext">
         <NeaxtIcon />
@@ -38,6 +39,7 @@ let isDown = false;
 let startX: number | undefined;
 let scrollLeft: number | undefined;
 // let isOverflow = ref(true);
+let focusedCategory = ref(null);
 
 onMounted(() => {
   cTags.value?.addEventListener("mousedown", (e: Event) => {
@@ -172,6 +174,7 @@ function slideNext() {
 // emit an event when a tag is clicked: focus-category event is emitted with the categoryId
 function focusCategory(categoryId: string) {
   // console.log("click: ",categoryId);
+  focusedCategory.value = categoryId;
   eventBus.emit("focus-category", "category-" + categoryId);
 }
 </script>

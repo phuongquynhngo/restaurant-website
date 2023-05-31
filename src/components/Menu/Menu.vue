@@ -18,6 +18,8 @@ import data from "../../assets/data/test.json";
 import { eventBus } from "../../eventBus/eventBus.js";
 let itemsData: { categories: Record<string, Category> } = data;
 
+
+
 onMounted(() => {  // listen for the eventBus and scroll to the desired category
   eventBus.on("focus-category", (catergoryId) => {
     const targetDiv = document.getElementById(catergoryId);

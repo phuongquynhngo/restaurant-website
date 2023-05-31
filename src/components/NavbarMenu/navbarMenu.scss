@@ -57,6 +57,9 @@
         white-space: nowrap;
         border-radius: 100vmax;
         user-select: none;
+        &.focused{
+          background:#e46335;
+        }
         &:hover {
           background-color: #e46335;
         }
