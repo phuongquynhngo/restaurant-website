@@ -6,14 +6,12 @@
   box-sizing: border-box;
   border: 5px solid white;
   user-select: none;
-  display: flex;
-  justify-content: center; // Center the items horizontally
-  align-items: center;
   background-color: #155264;
   color: white;
-  &:hover{
-    background-color:#104150;
-
+  display: flex;
+  align-items: center;
+  &:hover {
+    background-color: #104150;
   }
   .cart-icon {
     position: absolute;
@@ -34,5 +32,10 @@
   }
 
   .sum-order {
+    position: absolute;
+    left: 5rem;
+    right: 2rem;
+    display: flex;
+    justify-content: center;
   }
 }

@@ -1,4 +1,4 @@
-<script setup lang="ts">
+ <script setup lang="ts">
 import { useRoute } from "vue-router";
 import Header from "./components/Header/Header.vue";
 
@@ -7,7 +7,7 @@ const route = useRoute();
 
 <template>
   <div class="container">
-    <Header />
+    <Header/>
     <RouterView />
   </div>
 </template>
@@ -21,3 +21,4 @@ const route = useRoute();
   box-sizing: border-box; //set the box-sizing property to border-box to include padding and borders
 }
 </style>
+
