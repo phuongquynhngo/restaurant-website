@@ -15,6 +15,7 @@ const pinia = createPinia()
 
 app.component('Divider', Divider)
 
+
 app.use(router)
 app.use(pinia)
 app.mount('#app')
