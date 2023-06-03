@@ -3,6 +3,7 @@
       {
         "id": 1,
         "name": " Appetizers ",
+       
         "image": "https://lh3.googleusercontent.com/p/AF1QipObp66T3mbsEOPWJ-7rvSq1bpoj752lA7Dt05uu=s680-w680-h510",
         "items": [
           {
@@ -31,6 +32,7 @@
       {
         "id": 2,
         "name": "Main Courses",
+       
         "image": "https://lh3.googleusercontent.com/p/AF1QipMqwUZlD3rUCZPLg02EGra4a3oFiYK2vBv-Ey2G=s680-w680-h510",
         "items": [
           {
@@ -59,6 +61,65 @@
       {
         "id": 3,
         "name": "Noodles and Rice",
+        
+        "image": "https://lh3.googleusercontent.com/p/AF1QipP6Uc0zZCIMKrru2UszLhSowoakjXZwPKlaX3d8=s680-w680-h510",
+        "items": [
+          {
+            "id": 7,
+            "name": "Shrimp Fried Rice",
+            "description": "Stir-fried rice with shrimp, vegetables, and soy sauce.",
+            "price": 9.99,
+            "image": "https://example.com/images/shrimp-fried-rice.jpg"
+          },
+          {
+            "id": 8,
+            "name": "Beef Chow Mein",
+            "description": "Stir-fried noodles with beef, vegetables, and soy-based sauce.",
+            "price": 8.99,
+            "image": "https://example.com/images/beef-chow-mein.jpg"
+          },
+          {
+            "id": 9,
+            "name": "Vegetable Lo Mein",
+            "description": "Stir-fried noodles with assorted vegetables in a flavorful sauce.",
+            "price": 7.99,
+            "image": "https://example.com/images/vegetable-lo-mein.jpg"
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "name": "Noodles and Rice 2",
+        
+        "image": "https://lh3.googleusercontent.com/p/AF1QipP6Uc0zZCIMKrru2UszLhSowoakjXZwPKlaX3d8=s680-w680-h510",
+        "items": [
+          {
+            "id": 7,
+            "name": "Shrimp Fried Rice",
+            "description": "Stir-fried rice with shrimp, vegetables, and soy sauce.",
+            "price": 9.99,
+            "image": "https://example.com/images/shrimp-fried-rice.jpg"
+          },
+          {
+            "id": 8,
+            "name": "Beef Chow Mein",
+            "description": "Stir-fried noodles with beef, vegetables, and soy-based sauce.",
+            "price": 8.99,
+            "image": "https://example.com/images/beef-chow-mein.jpg"
+          },
+          {
+            "id": 9,
+            "name": "Vegetable Lo Mein",
+            "description": "Stir-fried noodles with assorted vegetables in a flavorful sauce.",
+            "price": 7.99,
+            "image": "https://example.com/images/vegetable-lo-mein.jpg"
+          }
+        ]
+      },
+      {
+        "id": 5 ,
+        "name": "Noodles and Rice3",
+        
         "image": "https://lh3.googleusercontent.com/p/AF1QipP6Uc0zZCIMKrru2UszLhSowoakjXZwPKlaX3d8=s680-w680-h510",
         "items": [
           {
