@@ -5,6 +5,7 @@ hr {
   width: 100%;
 }
 .order-wrapper {
+  overflow-y: scroll;
   max-width: 100vw;
   min-width: 360px;
   z-index: 2;

@@ -6,38 +6,45 @@
         :key="category.id"
         :category="category"
         :id="'category-' + category.id"
+        @add-to-basket=" addToBasket"
        
       />
+    </div>
+    <div v-for="item in selectedItems" :key="item.id">
+      <!-- Display the selected items -->
+      {{ item.name }}
     </div>
   </div>
 </template>
 <script setup lang="ts">
-import { ref, watch, onMounted } from "vue";
+import { ref, watch, onMounted, computed} from "vue";
 import CategoryCard from "./Categories/CategoryCard.vue";
 import { useFocusedCategoryStore } from "../../stores/forcusCategoryStore";
 import { useActiveCategoryStore } from "../../stores/activeCategoryStore";
+import { useBasketStore  } from "../../stores/basketStore";
+
 
 import data from "../../assets/data/test.json";
 // import { eventBus } from "../../eventBus/eventBus.js";
 let itemsData: { categories: Record<string, Category> } = data;
 
 
-
-let activeCategory = ref(null);
 const forcusCategoryStore = useFocusedCategoryStore();
 const activeCategoryStore = useActiveCategoryStore();
 const menuWrapperRef = ref<HTMLDivElement | null>(null);
 
 
-const handleMenuScroll = () => {
-  const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-  const windowHeight = window.innerHeight;
-  const documentHeight = Math.max(
-    document.documentElement.clientHeight,
-    document.body.scrollHeight,
-    document.documentElement.scrollHeight
-  );
+const basketStore = useBasketStore();
 
+const selectedItems = computed(() => {
+  console.log(basketStore.getSelectedItems);
+  return basketStore.getSelectedItems;
+
+});
+
+// update store of  activeCategoryStore to the active category tag when scrolling vertically
+const handleMenuScroll = () => {
+  const windowHeight = window.innerHeight;
   let maxVisibleHeight = 0;
   let visibleCategory = null;
 
@@ -62,7 +69,7 @@ const handleMenuScroll = () => {
     }
   }  
 
-  
+
 
   if (visibleCategory !== null) {
     // console.log(visibleCategory);
@@ -93,6 +100,12 @@ watch(
   }
 );
 
+
+
+const addToBasket = (item) => {
+  console.log("Selected item:", item);
+  // You can perform any further actions with the selected item here
+};
 </script>
 <style scoped lang="scss">
 @import "./menu.scss";
