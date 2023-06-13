@@ -70,8 +70,12 @@ hr {
       font-weight: 400;
       .item-amount-name {
         display: flex;
+       
         .item-amount {
-          margin-right: 1rem;
+          width: 2rem;
+        }
+        .item-name{
+          margin-left: 1rem;
         }
       }
       .item-edit {
@@ -89,6 +93,10 @@ hr {
             text-align: center;
             cursor: pointer;
           }
+        }
+        .group-item-price{
+          margin-left: 0.5rem;
+          width: 4rem;
         }
         .delete-btn {
           margin-left: 1rem;

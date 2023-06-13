@@ -1,33 +1,32 @@
 <template>
-  <div class="menu-wrapper" ref="menuWrapperRef" @scroll="handleMenuScroll(menuWrapperRef.value)">
-    <div class="categories"  >
+  <div
+    class="menu-wrapper"
+    ref="menuWrapperRef"
+    @scroll="handleMenuScroll(menuWrapperRef.value)"
+  >
+    <div class="categories">
       <CategoryCard
         v-for="category in itemsData.categories"
         :key="category.id"
         :category="category"
         :id="'category-' + category.id"
-       
       />
     </div>
   </div>
 </template>
 <script setup lang="ts">
-import { ref, watch, onMounted} from "vue";
+import { ref, watch, onMounted } from "vue";
 import CategoryCard from "./Categories/CategoryCard.vue";
 import { useFocusedCategoryStore } from "../../stores/forcusCategoryStore";
 import { useActiveCategoryStore } from "../../stores/activeCategoryStore";
-
-
 
 import data from "../../assets/data/test.json";
 // import { eventBus } from "../../eventBus/eventBus.js";
 let itemsData: { categories: Record<string, Category> } = data;
 
-
 const forcusCategoryStore = useFocusedCategoryStore();
 const activeCategoryStore = useActiveCategoryStore();
 const menuWrapperRef = ref<HTMLDivElement | null>(null);
-
 
 // update store of  activeCategoryStore to the active category tag when scrolling vertically
 const handleMenuScroll = () => {
@@ -35,7 +34,11 @@ const handleMenuScroll = () => {
   let maxVisibleHeight = 0;
   let visibleCategory = null;
 
-  for (let category = 1; category <= Object.keys(itemsData.categories).length; category++) {
+  for (
+    let category = 1;
+    category <= Object.keys(itemsData.categories).length;
+    category++
+  ) {
     const categoryElement = document.getElementById(`category-${category}`);
     if (!categoryElement) continue;
 
@@ -54,27 +57,19 @@ const handleMenuScroll = () => {
         visibleCategory = parseInt(category);
       }
     }
-  }  
-
-
+  }
 
   if (visibleCategory !== null) {
-    // console.log(visibleCategory);
     activeCategoryStore.setActiveCategoryId(visibleCategory);
   }
 };
 
-
-
 onMounted(() => {
-  // console.log(menuWrapperRef.value);
   const menuWrapper = menuWrapperRef.value;
-  // console.log(menuWrapper);
   if (menuWrapper) {
     window.addEventListener("scroll", handleMenuScroll);
   }
 });
-
 
 //using the watch function to track changes to the focusedCategoryId in the activeCategoryStore
 watch(
@@ -86,7 +81,6 @@ watch(
     }
   }
 );
-
 </script>
 <style scoped lang="scss">
 @import "./menu.scss";

@@ -5,7 +5,7 @@
     </div>
     <Menu />
     <Footer />
-    <Order v-if="cartShowStore.shown" />
+    <Cart v-if="cartShowStore.shown" />
   </div>
 </template>
 
@@ -13,7 +13,7 @@
 import Footer from "../components/Footer/Footer.vue";
 import NavbarMenu from "../components/NavbarMenu/NavbarMenu.vue";
 import Menu from "../components/Menu/Menu.vue";
-import Order from "../components/Order/Order.vue";
+import Cart from "../components/Cart/Cart.vue";
 import { useCartShowStores } from "../stores/cartShowStores";
 import { ref, onMounted, onUnmounted } from "vue";
 import { useHeaderHeightStore } from "../stores/headerHeightStore";

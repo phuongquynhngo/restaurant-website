@@ -20,7 +20,6 @@ let cartShowStore = useCartShowStores();
 const basketStore = useBasketStore();
 
 const numberSelectedItems = computed(() => {
-  console.log(basketStore.calculateSelectedItemsCount);
   return basketStore.calculateSelectedItemsCount;
 });
 const totalSum = computed(() => basketStore.calculateTotalSum);
