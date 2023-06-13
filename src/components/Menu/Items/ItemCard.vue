@@ -1,6 +1,6 @@
 <template>
   <div class="item-container">
-    <div class="item-wrapper" @click="handleClick">
+    <div class="item-wrapper" @click="addItemToStore">
       <!--<div class="item-image">
        <img :src="item.image" alt="" /> 
     </div>-->
@@ -16,32 +16,19 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, defineEmits } from "vue";
+import { defineProps } from "vue";
 import PlusIcon from "./icons/plus.svg?component";
-import { useBasketStore  } from "../../../stores/basketStore";
-
-const emit = defineEmits(["add-item-to-basket"]);
+import { useBasketStore } from "../../../stores/basketStore";
 
 const props = defineProps({
   item: Object,
 });
-// Emit custom event to add item to the basket
-function addToBasket(item) {
-  // console.log("quang");
-  emit("add-item-to-basket", item);
-}
 
-
+//save selected items in store using store pinia
 const basketStore = useBasketStore();
-
 const addItemToStore = () => {
   const item = props.item;
   basketStore.addItem(item);
-};
-
-const handleClick = (item) => {
-  addToBasket(item);
-  addItemToStore();
 };
 </script>
 
