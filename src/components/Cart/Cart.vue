@@ -6,7 +6,7 @@
       <CloseIcon />
     </div>
 
-    <div class="order-empty-cart" v-if="selectedItems.length === 0">
+    <div class="order-empty-cart" v-if="sortedSelectedItems.length === 0">
       <div class="cart-icon">
         <CartIcon />
       </div>
@@ -14,7 +14,7 @@
     </div>
 
     <div class="order-cart-details" v-else>
-      <div class="cart-item" v-for="item in selectedItems" :key="item.id">
+      <div class="cart-item" v-for="item in sortedSelectedItems" :key="item.id">
         <div class="item-amount-name">
           <div class="item-amount">{{ item.quantity }}</div>
           <div>x</div>
@@ -33,7 +33,7 @@
       <hr />
     </div>
 
-    <div class="cart-sum" v-if="selectedItems.length > 0">
+    <div class="cart-sum" v-if="sortedSelectedItems.length > 0">
       <div class="cart-sum-row cart-sum-subtotal">
         <div class="cart-sum-name">Zwischensumme</div>
         <div class="cart-sum-price">{{ totalSum }} €</div>
@@ -62,7 +62,17 @@ import { useBasketStore } from "../../stores/basketStore";
 let cartShowStore = useCartShowStores();
 const basketStore = useBasketStore();
 
-const selectedItems = computed(() => basketStore.getGroupedItems);
+// const selectedItems = computed(() => basketStore.getGroupedItems);
+
+// prevent the order of items from changing when the quantity of grouped items changes.
+const sortedSelectedItems = computed(() => {
+  const items = basketStore.getGroupedItems;
+  return items.slice().sort((a, b) => a.id - b.id); //sorting by item identifier: compare the id values: 
+  //if the result is negative, a should come before b, and if the result is positive, b should come before a. 
+  //If the result is 0, the items have the same id and their order remains unchanged.
+  //slice() method on items: creates a copy of the array to avoid modifying the original one.
+});
+
 const totalSum = computed(() => basketStore.calculateTotalSum);
 
 const incrementQuantity = (item) => {
