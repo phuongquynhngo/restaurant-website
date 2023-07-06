@@ -18,6 +18,11 @@ const router = createRouter({
         name: 'Contact',
         component: () => import('../views/ContactView.vue')
       },
+      {
+        path: '/checkout',
+        name: 'checkout',
+        component: () => import('../views/Checkout.vue')
+      },
 
 
   ]

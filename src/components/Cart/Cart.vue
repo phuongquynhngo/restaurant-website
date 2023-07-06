@@ -48,7 +48,11 @@
       </div>
     </div>
 
-    <div class="order-checkout-btn">Bestellen</div>
+    <!-- <div class="order-checkout-btn">Bestellen</div> -->
+    <RouterLink class="order-checkout-btn" v-if="sortedSelectedItems.length > 0" to="/checkout">
+        <div >Weiter zum Bestellen</div></RouterLink
+      >
+
   </div>
 </template>
 <script setup lang="ts">

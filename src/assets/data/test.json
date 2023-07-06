@@ -4,7 +4,7 @@
         "id": 1,
         "name": " Appetizers ",
        
-        "image": "https://lh3.googleusercontent.com/p/AF1QipObp66T3mbsEOPWJ-7rvSq1bpoj752lA7Dt05uu=s680-w680-h510",
+        "image": "src/assets/photos/dishes/appetizers.jpg",
         "items": [
           {
             "id": 1,
@@ -33,7 +33,7 @@
         "id": 2,
         "name": "Main Courses",
        
-        "image": "https://lh3.googleusercontent.com/p/AF1QipMqwUZlD3rUCZPLg02EGra4a3oFiYK2vBv-Ey2G=s680-w680-h510",
+        "image": "src/assets/photos/dishes/mainCourses.jpg",
         "items": [
           {
             "id": 4,
@@ -62,7 +62,7 @@
         "id": 3,
         "name": "Noodles and Rice",
         
-        "image": "https://lh3.googleusercontent.com/p/AF1QipP6Uc0zZCIMKrru2UszLhSowoakjXZwPKlaX3d8=s680-w680-h510",
+        "image": "src/assets/photos/dishes/noodlesAndRice.jpg",
         "items": [
           {
             "id": 7,
@@ -91,7 +91,7 @@
         "id": 4,
         "name": "Noodles and Rice 2",
         
-        "image": "https://lh3.googleusercontent.com/p/AF1QipP6Uc0zZCIMKrru2UszLhSowoakjXZwPKlaX3d8=s680-w680-h510",
+        "image":  "src/assets/photos/dishes/noodlesAndRice.jpg",
         "items": [
           {
             "id": 10,
@@ -120,7 +120,7 @@
         "id": 5 ,
         "name": "Noodles and Rice3",
         
-        "image": "https://lh3.googleusercontent.com/p/AF1QipP6Uc0zZCIMKrru2UszLhSowoakjXZwPKlaX3d8=s680-w680-h510",
+        "image":  "src/assets/photos/dishes/noodlesAndRice.jpg",
         "items": [
           {
             "id": 13,
