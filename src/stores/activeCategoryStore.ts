@@ -6,7 +6,7 @@ export const useActiveCategoryStore = defineStore('active-category', {
     
   }),
   getters: {
-    getActiveCategoryId() {
+    getActiveCategoryId(): number | null {
       return this.activeCategoryId;
     },
   },

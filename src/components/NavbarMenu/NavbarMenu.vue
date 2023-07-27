@@ -23,37 +23,36 @@
   </div>
 </template>
 <script setup lang="ts">
-import { onMounted, ref, computed, watch } from "vue";
+import { onMounted, ref,watch, reactive } from "vue";
 import data from "../../assets/data/test.json";
 import NeaxtIcon from "./icons/next.svg?component";
 import PreviousIcon from "./icons/previous.svg?component";
 // import { eventBus } from "../../eventBus/eventBus.js";
-import { useFocusedCategoryStore } from "../../stores/forcusCategoryStore";
+import { useFocusedCategoryStore } from "../../stores/focusCategoryStore";
 import { useActiveCategoryStore } from "../../stores/activeCategoryStore";
+import { Category } from "../../models/Category";
 
 // slide tags in chat item using mouse
 const cTags = ref<HTMLDivElement | null>(null);
 const categoryTags = ref<Array<HTMLElement | null>>([]);
-const showPrevButton = ref(false);
-const showNextButton = ref(false);
-const isOverflow = ref(true);
+const showPrevButton = ref<boolean>(false);
+const showNextButton = ref<boolean>(false);
+const isOverflow = ref<boolean>(true);
 let activeCategory = ref<number | null>(null);
 
-const forcusCategoryStore = useFocusedCategoryStore();
+const focusCategoryStore = useFocusedCategoryStore();
 const activeCategoryStore = useActiveCategoryStore();
 
-let isDown = false;
+let isDown: boolean = false;
 let startX: number | undefined;
 let scrollLeft: number | undefined;
-// let isOverflow = ref(true);
 
-let itemsData: { categories: Record<string, Category> } = ref(data);
-
+const itemsData = reactive(data);
 onMounted(() => {
   cTags.value?.addEventListener("mousedown", (e: Event) => {
     const mouseEvent = e as MouseEvent;
     isDown = true;
-    startX = mouseEvent.pageX - cTags.value?.offsetLeft;
+    startX = mouseEvent.pageX - (cTags.value?.offsetLeft ?? 0);
     scrollLeft = cTags.value?.scrollLeft ?? 0;
   });
 
@@ -69,7 +68,7 @@ onMounted(() => {
     if (!isDown) return;
     e.preventDefault();
     const mouseEvent = e as MouseEvent;
-    const x = mouseEvent.pageX - cTags.value?.offsetLeft;
+    const x = mouseEvent.pageX - (cTags.value?.offsetLeft ?? 0);
     const walk = (x - (startX as number)) * 3; // adjust scrolling speed here
     cTags.value!.scrollLeft = (scrollLeft as number) - walk;
   });
@@ -85,18 +84,18 @@ onMounted(() => {
 
 function handleScroll() {
   // Update the visibility of the slider buttons based on overflow
-  const prevButton = document.querySelector(".slider-button.prev");
-  const nextButton = document.querySelector(".slider-button.next");
+  const prevButton = document.querySelector(".slider-button.prev") as HTMLDivElement;
+  const nextButton = document.querySelector(".slider-button.next") as HTMLDivElement;
 
   if (prevButton && nextButton) {
     prevButton.style.display = cTags.value?.scrollLeft === 0 ? "none" : "block";
     nextButton.style.display =
-      cTags.value?.scrollLeft + cTags.value?.clientWidth >= cTags.value?.scrollWidth
+      (cTags.value?.scrollLeft ?? 0) + (cTags.value?.clientWidth ?? 0) >= (cTags.value?.scrollWidth ?? 0)
         ? "none"
         : "block";
   }
   // Update the visibility of the previous button
-  showPrevButton.value = cTags.value?.scrollLeft > 0;
+  showPrevButton.value = (cTags.value?.scrollLeft ?? 0) > 0;
 }
 
 // Automatically scroll the navbar horizontally to the active category tag when scrolling vertically
@@ -110,10 +109,10 @@ function handleScrollTag() {
     const categoryRect = activeCategoryElement.getBoundingClientRect();
 
     if (
-      categoryRect.left < containerRect.left ||
-      categoryRect.right > containerRect.right
+      categoryRect.left < (containerRect?.left ?? 0) ||
+      categoryRect.right > (containerRect?.right ?? 0)
     ) {
-      const scrollLeft = categoryRect.left - containerRect.left + cTags.value?.scrollLeft;
+      const scrollLeft = categoryRect.left - (containerRect?.left ?? 0) + (cTags.value?.scrollLeft ?? 0);
       cTags.value?.scrollTo({ left: scrollLeft, behavior: "smooth" });
     }
   }
@@ -132,72 +131,6 @@ function updateOverflow() {
   isOverflow.value = isScrollingLeft || isScrollingRight || !isScrollable;
   showNextButton.value = isScrollingRight && !isLastTagCompletelyVisible;
 }
-
-// function slidePrev() {
-//   const clientWidth = cTags.value?.clientWidth;
-//   const currentScrollLeft = cTags.value?.scrollLeft;
-
-//   // Find the previous category tag that is currently not fully visible
-//   const prevCategoryTag = categoryTags.value
-//     .slice()
-//     .reverse()
-//     .find((tag) => {
-//       if (tag) {
-//         const tagLeft = tag.offsetLeft;
-//         const tagRight = tagLeft + tag.offsetWidth;
-//         return tagRight <= currentScrollLeft!;
-//       }
-//       return false;
-//     });
-
-//   if (prevCategoryTag) {
-//     // Scroll to the previous category tag
-//     cTags.value?.scrollTo({
-//       left: prevCategoryTag.offsetLeft,
-//       behavior: "smooth",
-//     });
-//   } else {
-//     // Calculate the previous scroll position
-//     const prevScrollLeft = Math.max(currentScrollLeft! - clientWidth!, 0);
-
-//     // Scroll to the previous section
-//     cTags.value?.scrollTo({
-//       left: prevScrollLeft,
-//       behavior: "smooth",
-//     });
-//   }
-// }
-
-// function slideNext() {
-//   const clientWidth = cTags.value?.clientWidth;
-//   const currentScrollLeft = cTags.value?.scrollLeft;
-
-//   // Find the first category tag that is currently not fully visible
-//   const nextCategoryTag = categoryTags.value.find((tag) => {
-//     if (tag) {
-//       const tagLeft = tag.offsetLeft;
-//       return tagLeft >= currentScrollLeft! + clientWidth!;
-//     }
-//     return false;
-//   });
-
-//   if (nextCategoryTag) {
-//     // Scroll to the next category tag
-//     cTags.value?.scrollTo({
-//       left: nextCategoryTag.offsetLeft,
-//       behavior: "smooth",
-//     });
-//   } else {
-//     // Calculate the next scroll position
-//     const nextScrollLeft = currentScrollLeft! + clientWidth!;
-
-//     // Scroll to the next section
-//     cTags.value?.scrollTo({
-//       left: nextScrollLeft,
-//       behavior: "smooth",
-//     });
-//   }
-// }
 
 function slidePrev() {
   const currentScrollLeft = cTags.value?.scrollLeft;
@@ -261,11 +194,11 @@ function slideNext() {
 // }
 
 //using store pinia
-function focusCategory(category) {
+function focusCategory(category: Category) {
   activeCategory.value = category.id;
   // console.log( activeCategory.value);
   activeCategoryStore.setActiveCategoryId(category.id);
-  forcusCategoryStore.setFocusedCategoryId(category.id);
+  focusCategoryStore.setFocusedCategoryId(category.id);
 }
 watch(
   () => activeCategoryStore.getActiveCategoryId,
@@ -278,3 +211,4 @@ watch(
 <style scoped lang="scss">
 @import "./navbarMenu.scss";
 </style>
+../../stores/focusCategoryStore

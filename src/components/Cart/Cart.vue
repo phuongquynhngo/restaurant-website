@@ -25,7 +25,7 @@
             <div class="edit-amount-btn" @click="decrementQuantity(item)">-</div>
             <div class="edit-amount-btn" @click="incrementQuantity(item)">+</div>
           </div>
-          <div class="group-item-price">{{ item.totalPrice.toFixed(2) }} €</div>
+          <div class="group-item-price">{{ item.totalPrice?.toFixed(2) }} €</div>
           <div class="delete-btn" @click="removeItem(item)"><TrashIcon /></div>
         </div>
       </div>
@@ -49,10 +49,14 @@
     </div>
 
     <!-- <div class="order-checkout-btn">Bestellen</div> -->
-    <RouterLink class="order-checkout-btn" v-if="sortedSelectedItems.length > 0" to="/checkout">
-        <div >Weiter zum Bestellen</div></RouterLink
-      >
-
+    <RouterLink
+      class="order-checkout-btn"
+      v-if="sortedSelectedItems.length > 0"
+      to="/checkout"
+      @click="cartShowStore.shown = false"
+    >
+      <div>Weiter zum Bestellen</div></RouterLink
+    >
   </div>
 </template>
 <script setup lang="ts">
@@ -62,33 +66,32 @@ import CloseIcon from "../Header/NavbarHeader/icons/close.svg?component";
 import TrashIcon from "./icons/trash.svg?component";
 import { useCartShowStores } from "../../stores/cartShowStores";
 import { useBasketStore } from "../../stores/basketStore";
+import { Item } from "../../models/Item";
 
 let cartShowStore = useCartShowStores();
 const basketStore = useBasketStore();
 
-// const selectedItems = computed(() => basketStore.getGroupedItems);
-
 // prevent the order of items from changing when the quantity of grouped items changes.
 const sortedSelectedItems = computed(() => {
   const items = basketStore.getGroupedItems;
-  return items.slice().sort((a, b) => a.id - b.id); //sorting by item identifier: compare the id values: 
-  //if the result is negative, a should come before b, and if the result is positive, b should come before a. 
+  return items.slice().sort((a, b) => a.id - b.id); //sorting by item identifier: compare the id values:
+  //if the result is negative, a should come before b, and if the result is positive, b should come before a.
   //If the result is 0, the items have the same id and their order remains unchanged.
   //slice() method on items: creates a copy of the array to avoid modifying the original one.
 });
 
 const totalSum = computed(() => basketStore.calculateTotalSum);
 
-const incrementQuantity = (item) => {
+const incrementQuantity = (item: Item) => {
   basketStore.addItem(item);
   // console.log(basketStore.getGroupedItems);
 };
 
-const decrementQuantity = (item) => {
+const decrementQuantity = (item: Item) => {
   basketStore.removeItem(item);
 };
 
-const removeItem = (item) => {
+const removeItem = (item: Item) => {
   basketStore.removeItem(item);
 };
 </script>

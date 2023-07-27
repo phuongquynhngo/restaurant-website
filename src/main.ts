@@ -9,11 +9,13 @@ import Divider from './components/Divider/Divider.vue'
 
 
 
-const app = createApp(App)
 const pinia = createPinia()
+const app = createApp(App)
+
 
 
 app.component('Divider', Divider)
+
 
 
 app.use(router)

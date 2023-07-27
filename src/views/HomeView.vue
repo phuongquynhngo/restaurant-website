@@ -4,8 +4,8 @@
       <NavbarMenu />
     </div>
     <Menu />
-    <!-- <Footer />
-    <Cart v-if="cartShowStore.shown" /> -->
+     <Footer />
+    <Cart v-if="cartShowStore.shown" /> 
   </div>
 </template>
 
@@ -14,6 +14,10 @@ import NavbarMenu from "../components/NavbarMenu/NavbarMenu.vue";
 import Menu from "../components/Menu/Menu.vue";
 import { ref, onMounted, onUnmounted } from "vue";
 import { useHeaderHeightStore } from "../stores/headerHeightStore";
+import Footer from "../components/Footer/Footer.vue";
+import Cart from "../components/Cart/Cart.vue";
+import { useCartShowStores } from "../stores/cartShowStores";
+let cartShowStore = useCartShowStores();
 
 const scrollPosition = ref(0); //track the scroll position
 const isNavbarFixed = ref(false);
@@ -22,10 +26,11 @@ const headerHeightStore = useHeaderHeightStore();
 const headerHeight = headerHeightStore.getHeaderHeight; // access the headerHeight value from the useHeaderHeightStore
 
 const handleScroll = () => {
-  //update the isNavbarFixed variable based on the scroll position
-  scrollPosition.value = window.pageYOffset || document.documentElement.scrollTop; //get the current scroll position of the window using window.pageYOffset or document.documentElement.scrollTop.
-  isNavbarFixed.value = scrollPosition.value > headerHeight; //The <NavbarMenu /> component will become fixed after scrolling past this height of header.
+  // Update the isNavbarFixed variable based on the scroll position
+  scrollPosition.value = window.scrollY || document.documentElement.scrollTop;
+  isNavbarFixed.value = headerHeight !== null && scrollPosition.value > headerHeight;
 };
+
 
 onMounted(() => {
   window.addEventListener("scroll", handleScroll);

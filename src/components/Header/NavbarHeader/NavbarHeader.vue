@@ -20,8 +20,6 @@
 </template>
 <script setup lang="ts">
 import CloseIcon from "./icons/close.svg?component";
-import { useRoute } from "vue-router";
-const route = useRoute();
 </script>
 <style scoped lang="scss">
 @import "./navbarHeader.scss";

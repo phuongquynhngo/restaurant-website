@@ -2,7 +2,7 @@
   <div
     class="menu-wrapper"
     ref="menuWrapperRef"
-    @scroll="handleMenuScroll(menuWrapperRef.value)"
+    @scroll="handleMenuScroll"
   >
     <div class="categories">
       <CategoryCard
@@ -15,16 +15,16 @@
   </div>
 </template>
 <script setup lang="ts">
-import { ref, watch, onMounted } from "vue";
+import { ref, watch, reactive, onMounted } from "vue";
 import CategoryCard from "./Categories/CategoryCard.vue";
-import { useFocusedCategoryStore } from "../../stores/forcusCategoryStore";
+import { useFocusedCategoryStore } from "../../stores/focusCategoryStore";
 import { useActiveCategoryStore } from "../../stores/activeCategoryStore";
 
 import data from "../../assets/data/test.json";
 // import { eventBus } from "../../eventBus/eventBus.js";
-let itemsData: { categories: Record<string, Category> } = data;
 
-const forcusCategoryStore = useFocusedCategoryStore();
+const itemsData = reactive(data);
+const focusCategoryStore = useFocusedCategoryStore();
 const activeCategoryStore = useActiveCategoryStore();
 const menuWrapperRef = ref<HTMLDivElement | null>(null);
 
@@ -54,7 +54,7 @@ const handleMenuScroll = () => {
 
       if (categoryVisibleHeight > maxVisibleHeight) {
         maxVisibleHeight = categoryVisibleHeight;
-        visibleCategory = parseInt(category);
+        visibleCategory = category;
       }
     }
   }
@@ -73,9 +73,9 @@ onMounted(() => {
 
 //using the watch function to track changes to the focusedCategoryId in the activeCategoryStore
 watch(
-  () => forcusCategoryStore.getFocusedCategoryId,
+  () => focusCategoryStore.getFocusedCategoryId,
   (categoryId) => {
-    const targetDiv = document.getElementById(categoryId);
+    const targetDiv = document.getElementById(categoryId ?? '');
     if (targetDiv) {
       targetDiv.scrollIntoView({ behavior: "smooth" });
     }
@@ -85,3 +85,4 @@ watch(
 <style scoped lang="scss">
 @import "./menu.scss";
 </style>
+../../stores/focusCategoryStore

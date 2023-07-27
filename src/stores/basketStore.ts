@@ -1,18 +1,18 @@
 import { defineStore } from 'pinia';
 import Cookies from 'js-cookie';
-
+import {Item} from '../models/Item';
 export const useBasketStore = defineStore('basketStore', {
   state: () => ({
-    selectedItems: [], // Initial empty array to store the selected items
-    groupedItems: [], // Initial empty array to store the grouped items
+    selectedItems: [] as Item[], // Initial empty array to store the selected items
+    groupedItems:  [] as Item[], // Initial empty array to store the grouped items
   }),
   actions: {
-    addItem(item) {
+    addItem(item: Item) {
       this.selectedItems.push(item);
       this.updateGroupedItems();
       this.saveCartToCookie(); // save the updated cart to a cookie
     },
-    removeItem(item) {
+    removeItem(item: Item) {
       const index = this.selectedItems.findIndex((el) => el.id === item.id);// find the index of the item based on its unique identifier
       if (index !== -1) { //Check if the item was found in the selectedItems array.
         this.selectedItems.splice(index, 1);
@@ -25,55 +25,6 @@ export const useBasketStore = defineStore('basketStore', {
       this.groupedItems = [];
       this.saveCartToCookie();
     },
-    // updateGroupedItems() { // this.groupedItems is updated based on the items in this.selectedItems 
-    //     //by using the reduce method and a reducer function that performs the necessary grouping and accumulation logic.
-    //   this.groupedItems = this.selectedItems.reduce((accumulator, item) => { //Use the reduce method on the selectedItems array to iterate over each item and accumulate the grouped items.
-    //     const existingItem = accumulator.find((el) => el.id === item.id); //find method with el represents the current element being processed in the array.
-
-
-        
-
-    //     //update an existing item in the accumulator array or add a new item. 
-
-    //     if (existingItem) {
-    //       // update quantity and totalPrice properties of existingItem.
-    //       existingItem.quantity++;
-    //       existingItem.totalPrice += item.price;
-
-    //     } else { //no existing item in accumulator is found
-    //       const newItem = {  // create newItem  with the necessary properties (including quantity and totalPrice) 
-    //         ...item,
-    //         quantity: 1,
-    //         totalPrice: parseFloat(item.price.toFixed(2)),
-    //       };
-    //       accumulator.push(newItem); //push newItem to the accumulator.
-    //     }
-
-    //     return accumulator;
-    //   }, []);//The empty array [] is used as the initial value for the accumulator array. 
-    //   this.saveCartToCookie();
-    // },
-
-    // updateGroupedItems() {
-    //     this.groupedItems = [];
-  
-    //     for (const item of this.selectedItems) {
-    //       const existingItem = this.groupedItems.find((el) => el.id === item.id);
-  
-    //       if (existingItem) {
-    //         existingItem.quantity++;
-    //         existingItem.totalPrice += item.price;
-    //       } else {
-    //         const newItem = {
-    //           ...item,
-    //           quantity: 1,
-    //           totalPrice: parseFloat(item.price.toFixed(2)),
-    //         };
-    //         this.groupedItems.push(newItem);
-    //       }
-    //     }
-    //   },
-
     updateGroupedItems() {
         const groupedItemsMap = new Map();
         
@@ -120,7 +71,7 @@ export const useBasketStore = defineStore('basketStore', {
     // getGroupedItems: (state) => state.groupedItems,
     getGroupedItems: (state) => {
         // Create a map of grouped item IDs for efficient lookup
-        const groupedItemsMap = state.groupedItems.reduce((map, item) => {
+        const groupedItemsMap: Record<number, Item> =  state.groupedItems.reduce((map: Record<number, Item>, item: Item) => {
           map[item.id] = item;
           return map;
         }, {});
@@ -131,7 +82,7 @@ export const useBasketStore = defineStore('basketStore', {
       
     calculateTotalSum: (state) => {
       const sum = state.groupedItems.reduce(
-        (total, item) => total + parseFloat(item.totalPrice.toFixed(2)), //round the sum to two decimal places and then convert it to a floating-point number
+        (total, item) => total + parseFloat((item.totalPrice ?? 0).toFixed(2)), //round the sum to two decimal places and then convert it to a floating-point number
         0
       );
       return parseFloat(sum.toFixed(2));

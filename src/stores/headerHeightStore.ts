@@ -5,12 +5,12 @@ export const useHeaderHeightStore = defineStore('header-height', {
     headerHeight: 0,
   }),
   getters: {
-    getHeaderHeight() {
+    getHeaderHeight(): number | null {
       return this.headerHeight;
     },
   },
   actions: {
-    setHeaderHeight(height) {
+    setHeaderHeight(height: number) {
       this.headerHeight = height;
     },
   },
