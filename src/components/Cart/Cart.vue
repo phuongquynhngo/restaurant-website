@@ -62,8 +62,8 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import CartIcon from "../Footer/icons/cart.svg";
-import CloseIcon from "../Header/NavbarHeader/icons/close.svg?component";
-import TrashIcon from "./icons/trash.svg?component";
+import CloseIcon from "../Header/NavbarHeader/icons/close.svg";
+import TrashIcon from "./icons/trash.svg";
 import { useCartShowStores } from "../../stores/cartShowStores";
 import { useBasketStore } from "../../stores/basketStore";
 import { Item } from "../../models/Item";

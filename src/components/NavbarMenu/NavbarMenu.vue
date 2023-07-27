@@ -25,8 +25,8 @@
 <script setup lang="ts">
 import { onMounted, ref,watch, reactive } from "vue";
 import data from "../../assets/data/test.json";
-import NeaxtIcon from "./icons/next.svg?component";
-import PreviousIcon from "./icons/previous.svg?component";
+import NeaxtIcon from "./icons/next.svg";
+import PreviousIcon from "./icons/previous.svg";
 // import { eventBus } from "../../eventBus/eventBus.js";
 import { useFocusedCategoryStore } from "../../stores/focusCategoryStore";
 import { useActiveCategoryStore } from "../../stores/activeCategoryStore";

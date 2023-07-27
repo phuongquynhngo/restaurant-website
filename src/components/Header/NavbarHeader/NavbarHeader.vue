@@ -19,7 +19,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import CloseIcon from "./icons/close.svg?component";
+import CloseIcon from "./icons/close.svg";
 </script>
 <style scoped lang="scss">
 @import "./navbarHeader.scss";
