@@ -11,11 +11,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
 import ItemCard from "../Items/ItemCard.vue";
-import { Category } from "../../../models/Category";
+import { Category } from "../../../models/Category"; 
 
-const category = ref<Category | null>(null);
+const { category } = defineProps({
+  category: Object as () => Category | null
+});
 </script>
 <style scoped lang="scss">
 @import "./categoryCard.scss";
