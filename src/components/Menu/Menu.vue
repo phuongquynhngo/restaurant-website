@@ -85,4 +85,3 @@ watch(
 <style scoped lang="scss">
 @import "./menu.scss";
 </style>
-../../stores/focusCategoryStore

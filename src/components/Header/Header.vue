@@ -20,11 +20,11 @@
 </template>
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
-import MenuIcon from "./icons/menu.svg?component";
+import MenuIcon from "./icons/menu.svg";
 import NavbarHeader from "./NavbarHeader/NavbarHeader.vue";
 import { useHeaderHeightStore } from "../../stores/headerHeightStore";
 const isActive = ref<boolean>(false);
-const headerRef = ref(null);
+const headerRef = ref<HTMLDivElement | null>(null);
 
 const headerHeight = useHeaderHeightStore();
 onMounted(() => {

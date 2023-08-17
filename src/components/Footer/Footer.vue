@@ -10,7 +10,7 @@
 </template>
 <script setup lang="ts">
 import {computed} from "vue";
-import CartIcon from "./icons/cart.svg?component";
+import CartIcon from "./icons/cart.svg";
 import { useCartShowStores } from "../../stores/cartShowStores";
 import { useBasketStore } from "../../stores/basketStore";
 

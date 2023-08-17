@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import PlusIcon from "./icons/plus.svg?component";
+import PlusIcon from "./icons/plus.svg";
 import { useBasketStore } from "../../../stores/basketStore";
 import { Item } from "../../../models/Item";
 
