@@ -32,12 +32,12 @@ export const useBasketStore = defineStore('basketStore', {
           if (groupedItemsMap.has(item.id)) {
             const existingItem = groupedItemsMap.get(item.id);
             existingItem.quantity++;
-            existingItem.totalPrice += item.price;
+            existingItem.totalPrice += Number(item.price);
           } else {
             const newItem = {
               ...item,
               quantity: 1,
-              totalPrice: parseFloat(item.price.toFixed(2)),
+              totalPrice: parseFloat(Number(item.price).toFixed(2)),
             };
             groupedItemsMap.set(item.id, newItem);
           }
@@ -49,21 +49,26 @@ export const useBasketStore = defineStore('basketStore', {
     saveCartToCookie() { // save the current cart to a cookie
         Cookies.set('cart', JSON.stringify(this.selectedItems));
       },
-
-    initializeCartFromCookie() { //Retrieve the cart from the cookie
-        const cartData = Cookies.get('cart');
-        if (cartData) {
-          try {
-            this.selectedItems = JSON.parse(cartData);
+    // Inside initializeCartFromCookie:
+    initializeCartFromCookie() {
+      const cartData = Cookies.get('cart');
+      if (cartData) {
+        try {
+          const parsedItems = JSON.parse(cartData);
+          if (Array.isArray(parsedItems)) {
+            // Verify that parsedItems is an array of valid Item objects
+            this.selectedItems = parsedItems;
             this.updateGroupedItems();
-          } catch (error) {
-            // Handle the error when JSON data is invalid
-            console.error('Error parsing cart data:', error);
-            // You can choose to clear the cart or take any other appropriate action here
-            this.clearItems();
+          } else {
+            console.error('Invalid cart data format:', parsedItems);
+            this.clearItems(); // Handle the error by clearing the cart
           }
+        } catch (error) {
+          console.error('Error parsing cart data:', error);
+          this.clearItems(); // Handle the parsing error by clearing the cart
         }
-      },
+      }
+    },
   
   },
   getters: {
@@ -80,13 +85,21 @@ export const useBasketStore = defineStore('basketStore', {
         return state.groupedItems.filter((item) => groupedItemsMap.hasOwnProperty(item.id));
       },
       
-    calculateTotalSum: (state) => {
-      const sum = state.groupedItems.reduce(
-        (total, item) => total + parseFloat((item.totalPrice ?? 0).toFixed(2)), //round the sum to two decimal places and then convert it to a floating-point number
-        0
-      );
-      return parseFloat(sum.toFixed(2));
-    },
+      calculateTotalSum: (state) => {
+        const sum = state.groupedItems.reduce((total, item) => {
+          const itemTotalPrice = parseFloat(item.totalPrice);
+      
+          if (!isNaN(itemTotalPrice) && typeof itemTotalPrice === 'number') {
+            return total + itemTotalPrice;
+          } else {
+            console.error(`Invalid totalPrice for item with ID ${item.id}: ${item.totalPrice}`);
+            return total; // Don't include invalid totalPrice in the sum
+          }
+        }, 0);
+      
+        return parseFloat(sum.toFixed(2)); // Round the sum to two decimal places
+      },
+      
     calculateSelectedItemsCount: (state) => state.selectedItems.length,
   },
   

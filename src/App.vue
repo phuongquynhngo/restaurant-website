@@ -1,5 +1,36 @@
 <script setup lang="ts">
+import api from "./composables/api";
+import { ref, provide, onBeforeMount } from "vue";
 import Header from "./components/Header/Header.vue";
+import { Category } from "./models/Category.ts";
+import { Item } from "./models/Item.ts";
+
+let categoriesData = ref<Category[]>([]);
+const fetchCategories = async () => {
+  try {
+    const response = await api.get("/api/categories/");
+    categoriesData.value = response.data;
+    console.log("categories:", categoriesData.value);
+  } catch (error) {
+    console.log("Error fetching categories:", error);
+  }
+};
+let itemsData = ref<Item[]>([]);
+const fetchItems = async () => {
+  try {
+    const response = await api.get("/api/items/");
+    itemsData.value = response.data;
+    console.log("items:", itemsData.value);
+  } catch (error) {
+    console.log("Error fetching items:", error);
+  }
+};
+onBeforeMount(async () => {
+  await Promise.all([fetchCategories(), fetchItems()]);
+});
+
+provide("Items", itemsData);
+provide("Categories", categoriesData);
 </script>
 
 <template>

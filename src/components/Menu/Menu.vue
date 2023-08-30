@@ -1,66 +1,62 @@
 <template>
-  <div
-    class="menu-wrapper"
-    ref="menuWrapperRef"
-    @scroll="handleMenuScroll"
-  >
+  <div class="menu-wrapper" ref="menuWrapperRef" @scroll="handleMenuScroll">
     <div class="categories">
-      <CategoryCard
-        v-for="category in itemsData.categories"
-        :key="category.id"
-        :category="category"
-        :id="'category-' + category.id"
-      />
+      <CategoryCard v-for="category in categoriesData" :key="category.id" :category="category" :id="'category-' + category.id" />
     </div>
   </div>
 </template>
 <script setup lang="ts">
-import { ref, watch, reactive, onMounted } from "vue";
+import { ref, watch, onMounted } from "vue";
+import { inject } from "@vue/runtime-core";
 import CategoryCard from "./Categories/CategoryCard.vue";
 import { useFocusedCategoryStore } from "../../stores/focusCategoryStore";
 import { useActiveCategoryStore } from "../../stores/activeCategoryStore";
-
-import data from "../../assets/data/test.json";
+import { Category } from "../../models/Category.ts";
 // import { eventBus } from "../../eventBus/eventBus.js";
 
-const itemsData = reactive(data);
+// import data from "../../assets/data/test.json";
+
+const categoriesInject = inject("Categories") as Category[] | null;
+const categoriesRef = ref(categoriesInject); //access the array without the Proxy wrapper
+const categoriesData = categoriesRef.value;
+//console.log('categoriesData:', categoriesData);
+
 const focusCategoryStore = useFocusedCategoryStore();
 const activeCategoryStore = useActiveCategoryStore();
 const menuWrapperRef = ref<HTMLDivElement | null>(null);
 
 // update store of  activeCategoryStore to the active category tag when scrolling vertically
 const handleMenuScroll = () => {
-  const windowHeight = window.innerHeight;
-  let maxVisibleHeight = 0;
-  let visibleCategory = null;
+  if (categoriesData) {
+    // Check if categoriesData is not null
+    const windowHeight = window.innerHeight;
+    let maxVisibleHeight = 0;
+    let visibleCategory = null;
 
-  for (
-    let category = 1;
-    category <= Object.keys(itemsData.categories).length;
-    category++
-  ) {
-    const categoryElement = document.getElementById(`category-${category}`);
-    if (!categoryElement) continue;
+    for (const category of categoriesData) {
+      const categoryElement = document.getElementById(`category-${category.id}`);
+      if (!categoryElement) continue;
 
-    const categoryRect = categoryElement.getBoundingClientRect();
-    const categoryTop = categoryRect.top;
-    const categoryBottom = categoryRect.bottom;
+      const categoryRect = categoryElement.getBoundingClientRect();
+      const categoryTop = categoryRect.top;
+      const categoryBottom = categoryRect.bottom;
 
-    let categoryVisibleTop = Math.max(categoryTop, 0);
-    let categoryVisibleBottom = Math.min(categoryBottom, windowHeight);
+      let categoryVisibleTop = Math.max(categoryTop, 0);
+      let categoryVisibleBottom = Math.min(categoryBottom, windowHeight);
 
-    if (categoryVisibleTop < categoryVisibleBottom) {
-      const categoryVisibleHeight = categoryVisibleBottom - categoryVisibleTop;
+      if (categoryVisibleTop < categoryVisibleBottom) {
+        const categoryVisibleHeight = categoryVisibleBottom - categoryVisibleTop;
 
-      if (categoryVisibleHeight > maxVisibleHeight) {
-        maxVisibleHeight = categoryVisibleHeight;
-        visibleCategory = category;
+        if (categoryVisibleHeight > maxVisibleHeight) {
+          maxVisibleHeight = categoryVisibleHeight;
+          visibleCategory = category.id;
+        }
       }
     }
-  }
 
-  if (visibleCategory !== null) {
-    activeCategoryStore.setActiveCategoryId(visibleCategory);
+    if (visibleCategory !== null) {
+      activeCategoryStore.setActiveCategoryId(visibleCategory);
+    }
   }
 };
 
@@ -75,7 +71,7 @@ onMounted(() => {
 watch(
   () => focusCategoryStore.getFocusedCategoryId,
   (categoryId) => {
-    const targetDiv = document.getElementById(categoryId ?? '');
+    const targetDiv = document.getElementById(categoryId ?? "");
     if (targetDiv) {
       targetDiv.scrollIntoView({ behavior: "smooth" });
     }

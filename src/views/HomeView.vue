@@ -4,8 +4,8 @@
       <NavbarMenu />
     </div>
     <Menu />
-     <Footer />
-    <Cart v-if="cartShowStore.shown" /> 
+    <Footer />
+    <Cart v-if="cartShowStore.shown" />
   </div>
 </template>
 
@@ -16,6 +16,7 @@ import { ref, onMounted, onUnmounted } from "vue";
 import { useHeaderHeightStore } from "../stores/headerHeightStore";
 import Footer from "../components/Footer/Footer.vue";
 import Cart from "../components/Cart/Cart.vue";
+
 import { useCartShowStores } from "../stores/cartShowStores";
 let cartShowStore = useCartShowStores();
 
@@ -30,7 +31,6 @@ const handleScroll = () => {
   scrollPosition.value = window.scrollY || document.documentElement.scrollTop;
   isNavbarFixed.value = headerHeight !== null && scrollPosition.value > headerHeight;
 };
-
 
 onMounted(() => {
   window.addEventListener("scroll", handleScroll);

@@ -7,8 +7,8 @@
       <div class="c-tags" ref="cTags">
         <span
           class="tag"
-          v-for="(category, categoryName) in itemsData.categories"
-          :key="categoryName"
+          v-for="category in categoriesData"
+          :key="category.id"
           ref="categoryTags"
           @click="focusCategory(category)"
           :id="'category-tag-' + category.id"
@@ -17,20 +17,27 @@
         </span>
       </div>
       <div v-if="showNextButton" class="slider-button next" @click="slideNext">
-        <NeaxtIcon />
+        <NextIcon />
       </div>
     </div>
   </div>
 </template>
 <script setup lang="ts">
-import { onMounted, ref,watch, reactive } from "vue";
-import data from "../../assets/data/test.json";
-import NeaxtIcon from "./icons/next.svg";
+import { onMounted, ref, watch, inject } from "vue";
+// import data from "../../assets/data/test.json";
+import NextIcon from "./icons/next.svg";
 import PreviousIcon from "./icons/previous.svg";
 // import { eventBus } from "../../eventBus/eventBus.js";
 import { useFocusedCategoryStore } from "../../stores/focusCategoryStore";
 import { useActiveCategoryStore } from "../../stores/activeCategoryStore";
-import { Category } from "../../models/Category";
+import { Category } from "../../models/Category.ts";
+
+// const categoriesData = inject("Categories") as Category[];
+const categoriesInject = inject('Categories') as Category[] | null;
+const categoriesRef = ref(categoriesInject);  //access the array without the Proxy wrapper
+const categoriesData = categoriesRef.value;
+//console.log('categoriesData', categoriesData);
+
 
 // slide tags in chat item using mouse
 const cTags = ref<HTMLDivElement | null>(null);
@@ -47,7 +54,7 @@ let isDown: boolean = false;
 let startX: number | undefined;
 let scrollLeft: number | undefined;
 
-const itemsData = reactive(data);
+// const itemsData = reactive(data);
 onMounted(() => {
   cTags.value?.addEventListener("mousedown", (e: Event) => {
     const mouseEvent = e as MouseEvent;
@@ -89,10 +96,7 @@ function handleScroll() {
 
   if (prevButton && nextButton) {
     prevButton.style.display = cTags.value?.scrollLeft === 0 ? "none" : "block";
-    nextButton.style.display =
-      (cTags.value?.scrollLeft ?? 0) + (cTags.value?.clientWidth ?? 0) >= (cTags.value?.scrollWidth ?? 0)
-        ? "none"
-        : "block";
+    nextButton.style.display = (cTags.value?.scrollLeft ?? 0) + (cTags.value?.clientWidth ?? 0) >= (cTags.value?.scrollWidth ?? 0) ? "none" : "block";
   }
   // Update the visibility of the previous button
   showPrevButton.value = (cTags.value?.scrollLeft ?? 0) > 0;
@@ -101,17 +105,12 @@ function handleScroll() {
 // Automatically scroll the navbar horizontally to the active category tag when scrolling vertically
 function handleScrollTag() {
   // Scroll the navbar to the active category tag if it's not visible
-  const activeCategoryElement = document.getElementById(
-    `category-tag-${activeCategory.value}`
-  );
+  const activeCategoryElement = document.getElementById(`category-tag-${activeCategory.value}`);
   if (activeCategoryElement) {
     const containerRect = cTags.value?.getBoundingClientRect();
     const categoryRect = activeCategoryElement.getBoundingClientRect();
 
-    if (
-      categoryRect.left < (containerRect?.left ?? 0) ||
-      categoryRect.right > (containerRect?.right ?? 0)
-    ) {
+    if (categoryRect.left < (containerRect?.left ?? 0) || categoryRect.right > (containerRect?.right ?? 0)) {
       const scrollLeft = categoryRect.left - (containerRect?.left ?? 0) + (cTags.value?.scrollLeft ?? 0);
       cTags.value?.scrollTo({ left: scrollLeft, behavior: "smooth" });
     }
@@ -120,13 +119,11 @@ function handleScrollTag() {
 
 function updateOverflow() {
   const isScrollingLeft = cTags.value?.scrollLeft === 0;
-  const isScrollingRight =
-    cTags.value?.scrollLeft! + cTags.value?.clientWidth! < cTags.value?.scrollWidth!;
+  const isScrollingRight = cTags.value?.scrollLeft! + cTags.value?.clientWidth! < cTags.value?.scrollWidth!;
   const isScrollable = cTags.value?.scrollWidth! > cTags.value?.clientWidth!;
 
   const lastTag = categoryTags.value[categoryTags.value.length - 1];
-  const isLastTagCompletelyVisible =
-    lastTag && lastTag.offsetLeft + lastTag.offsetWidth <= cTags.value?.clientWidth!;
+  const isLastTagCompletelyVisible = lastTag && lastTag.offsetLeft + lastTag.offsetWidth <= cTags.value?.clientWidth!;
 
   isOverflow.value = isScrollingLeft || isScrollingRight || !isScrollable;
   showNextButton.value = isScrollingRight && !isLastTagCompletelyVisible;
@@ -211,4 +208,4 @@ watch(
 <style scoped lang="scss">
 @import "./navbarMenu.scss";
 </style>
-../../stores/focusCategoryStore
+
