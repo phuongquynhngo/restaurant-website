@@ -1,8 +1,10 @@
 <template>
-  <div class="order-wrapper">
+  <div class="order-wrapper" :class="{
+    'small-screen-order-wrapper': isSmallScreenStore.smallScreen
+  }">
     <div class="order-header">Your Order</div>
     <hr />
-    <div class="close-icon" @click="cartShowStore.shown = false">
+    <div v-if="isSmallScreenStore.smallScreen" class="close-icon" @click="cartShowStore.shown = false">
       <CloseIcon />
     </div>
 
@@ -64,10 +66,12 @@ import { computed } from "vue";
 import CartIcon from "../Footer/icons/cart.svg";
 import CloseIcon from "../Header/NavbarHeader/icons/close.svg";
 import TrashIcon from "./icons/trash.svg";
+import { useIsSmallScreenStore } from "../../stores/isSmallScreenStore";
 import { useCartShowStores } from "../../stores/cartShowStores";
 import { useBasketStore } from "../../stores/basketStore";
 import { Item } from "../../models/Item";
 
+let isSmallScreenStore =  useIsSmallScreenStore();
 let cartShowStore = useCartShowStores();
 const basketStore = useBasketStore();
 
@@ -104,4 +108,13 @@ const showMessageIfNotQualifiedToCheckout = () => {
 </script>
 <style scoped lang="scss">
 @import "./cart.scss";
+.small-screen-order-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+
 </style>

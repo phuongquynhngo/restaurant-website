@@ -10,7 +10,7 @@ let isSmallScreenStore =  useIsSmallScreenStore();
 
 // Detect if the screen is small
 const checkScreenSize = () => {
-  isSmallScreenStore.smallScreen = window.innerWidth <= 768; // Adjust the breakpoint as needed
+  isSmallScreenStore.smallScreen = window.innerWidth <= 1024; // Adjust the breakpoint as needed
 };
 
 // Check the screen size initially and on window resize

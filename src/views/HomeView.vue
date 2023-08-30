@@ -3,9 +3,19 @@
     <div class="navbar-wrapper" :class="{ 'fixed-navbar': isNavbarFixed }">
       <NavbarMenu />
     </div>
-    <div class="content">
+    <div class="content" v-if="!isSmallScreenStore.smallScreen">
+      <div class="menu-column">
+        <Menu />
+      </div>
+      <div class="cart-container">
+      <div class="cart-column">
+        <Cart :class="{ 'fixed-cart': isCartFixed }" />
+      </div>
+    </div>
+    </div>
+    <div v-if="isSmallScreenStore.smallScreen">
       <Menu />
-      <Cart v-if="cartShowStore.shown || !isSmallScreenStore.smallScreen" />
+      <Cart v-if="cartShowStore.shown" />
     </div>
     <Footer v-if="isSmallScreenStore.smallScreen" />
   </div>
@@ -20,7 +30,7 @@ import Footer from "../components/Footer/Footer.vue";
 import Cart from "../components/Cart/Cart.vue";
 
 import { useIsSmallScreenStore } from "../stores/isSmallScreenStore";
-let isSmallScreenStore =  useIsSmallScreenStore();
+let isSmallScreenStore = useIsSmallScreenStore();
 
 import { useCartShowStores } from "../stores/cartShowStores";
 let cartShowStore = useCartShowStores();
@@ -30,11 +40,13 @@ const isNavbarFixed = ref(false);
 
 const headerHeightStore = useHeaderHeightStore();
 const headerHeight = headerHeightStore.getHeaderHeight; // access the headerHeight value from the useHeaderHeightStore
-
+const isCartFixed = ref(false); // Track cart's fixed status
 const handleScroll = () => {
   // Update the isNavbarFixed variable based on the scroll position
   scrollPosition.value = window.scrollY || document.documentElement.scrollTop;
   isNavbarFixed.value = headerHeight !== null && scrollPosition.value > headerHeight;
+  // Update isCartFixed based on the scroll position
+  isCartFixed.value = scrollPosition.value > (headerHeight || 0);
 };
 
 onMounted(() => {
@@ -44,7 +56,6 @@ onMounted(() => {
 onUnmounted(() => {
   window.removeEventListener("scroll", handleScroll);
 });
-
 </script>
 
 <style scoped lang="scss">
@@ -55,14 +66,14 @@ onUnmounted(() => {
   flex-direction: column;
   align-items: stretch;
   min-height: 100vh; /* Ensure the content takes at least the full viewport height */
-}
-
-.content {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: flex-start;
-  flex: 1;
+  .content {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 5px;
+    align-items: flex-start;
+    flex: 1;
+  
+  }
 }
 
 .fixed-navbar {
@@ -71,19 +82,12 @@ onUnmounted(() => {
   width: 100%;
   z-index: 2;
 }
-
-.cart-visible {
-  flex: 1; /* Expand to fill available space */
-}
-
-/* Apply styles for small screens */
-@media (max-width: 768px) {
-  .content {
-    flex-direction: column;
-  }
-
-  .cart-visible {
-    order: 1; /* Place the cart below the menu */
-  }
+.fixed-cart {
+  position: fixed;
+  width: 33vw;
+  top: 60px;
+  bottom: 0;
+  right: 0;
+  box-sizing: border-box;
 }
 </style>
