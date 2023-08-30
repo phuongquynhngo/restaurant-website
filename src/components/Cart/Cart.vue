@@ -1,6 +1,6 @@
 <template>
   <div class="order-wrapper">
-    <div class="order-header">Deine Bestellung</div>
+    <div class="order-header">Your Order</div>
     <hr />
     <div class="close-icon" @click="cartShowStore.shown = false">
       <CloseIcon />
@@ -10,7 +10,7 @@
       <div class="cart-icon">
         <CartIcon />
       </div>
-      <div>Wähle leckere Gerichte aus der Karte und bestelle dein Menü.</div>
+      <div>Select delicious dishes from the menu and place your order.</div>
     </div>
 
     <div class="order-cart-details" v-else>
@@ -25,7 +25,7 @@
             <div class="edit-amount-btn" @click="decrementQuantity(item)">-</div>
             <div class="edit-amount-btn" @click="incrementQuantity(item)">+</div>
           </div>
-          <div class="group-item-price">{{ item.totalPrice?.toFixed(2) }} €</div>
+          <div class="group-item-price">{{ Number(item.totalPrice).toFixed(2) }} €</div>
           <div class="delete-btn" @click="removeItem(item)"><TrashIcon /></div>
         </div>
       </div>
@@ -35,15 +35,15 @@
 
     <div class="cart-sum" v-if="sortedSelectedItems.length > 0">
       <div class="cart-sum-row cart-sum-subtotal">
-        <div class="cart-sum-name">Zwischensumme</div>
+        <div class="cart-sum-name">Subtotal</div>
         <div class="cart-sum-price">{{ totalSum }} €</div>
       </div>
       <div class="cart-sum-row cart-sum-delivery-costs">
-        <div class="cart-sum-name">Lieferkosten</div>
-        <div class="cart-sum-price">Kostenlos</div>
+        <div class="cart-sum-name">Delivery Costs</div>
+        <div class="cart-sum-price">Free</div>
       </div>
       <div class="cart-sum-row cart-sum-total">
-        <div class="cart-sum-name">Gesamt</div>
+        <div class="cart-sum-name">Total</div>
         <div class="cart-sum-price">{{ totalSum.toFixed(2) }} €</div>
       </div>
     </div>
@@ -52,10 +52,10 @@
     <RouterLink
       class="order-checkout-btn"
       v-if="sortedSelectedItems.length > 0"
-      to="/checkout"
-      @click="cartShowStore.shown = false"
+      :to="sortedSelectedItems.length > 0 && totalSum > 15 ? '/checkout' : ''"
+      @click="showMessageIfNotQualifiedToCheckout"
     >
-      <div>Weiter zum Bestellen</div></RouterLink
+      <div>Continue to checkout</div></RouterLink
     >
   </div>
 </template>
@@ -93,6 +93,13 @@ const decrementQuantity = (item: Item) => {
 
 const removeItem = (item: Item) => {
   basketStore.removeItem(item);
+};
+
+const showMessageIfNotQualifiedToCheckout = () => {
+  if (totalSum.value < 15) {
+    // Show a message to the user that the total is not enough for checkout
+    alert("Minimum order for checkout is 15 euros.");
+  } 
 };
 </script>
 <style scoped lang="scss">

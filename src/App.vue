@@ -5,6 +5,18 @@ import Header from "./components/Header/Header.vue";
 import { Category } from "./models/Category.ts";
 import { Item } from "./models/Item.ts";
 
+import { useIsSmallScreenStore } from "./stores/isSmallScreenStore";
+let isSmallScreenStore =  useIsSmallScreenStore();
+
+// Detect if the screen is small
+const checkScreenSize = () => {
+  isSmallScreenStore.smallScreen = window.innerWidth <= 768; // Adjust the breakpoint as needed
+};
+
+// Check the screen size initially and on window resize
+checkScreenSize();
+window.addEventListener("resize", checkScreenSize);
+
 let categoriesData = ref<Category[]>([]);
 const fetchCategories = async () => {
   try {
@@ -31,6 +43,8 @@ onBeforeMount(async () => {
 
 provide("Items", itemsData);
 provide("Categories", categoriesData);
+
+
 </script>
 
 <template>

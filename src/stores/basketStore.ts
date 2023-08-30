@@ -87,7 +87,7 @@ export const useBasketStore = defineStore('basketStore', {
       
       calculateTotalSum: (state) => {
         const sum = state.groupedItems.reduce((total, item) => {
-          const itemTotalPrice = parseFloat(item.totalPrice);
+          const itemTotalPrice = parseFloat(Number(item.totalPrice).toFixed(2));
       
           if (!isNaN(itemTotalPrice) && typeof itemTotalPrice === 'number') {
             return total + itemTotalPrice;

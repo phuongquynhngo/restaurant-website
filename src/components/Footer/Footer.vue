@@ -5,7 +5,7 @@
       <div class="items-number">{{ numberSelectedItems }}</div>
     </div>
 
-    <div class="sum-order">Deine Bestellung: {{ totalSum }} €</div>
+    <div class="sum-order">Your Order: {{ totalSum }} €</div>
   </div>
 </template>
 <script setup lang="ts">
