@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import api from "./composables/api";
+import api from "./composable/api";
 import { ref, provide, onBeforeMount } from "vue";
 import Header from "./components/Header/Header.vue";
 import { Category } from "./models/Category.ts";
@@ -10,7 +10,7 @@ let isSmallScreenStore =  useIsSmallScreenStore();
 
 // Detect if the screen is small
 const checkScreenSize = () => {
-  isSmallScreenStore.smallScreen = window.innerWidth <= 1024; // Adjust the breakpoint as needed
+  isSmallScreenStore.smallScreen = window.innerWidth <= 1280; // Adjust the breakpoint as needed
 };
 
 // Check the screen size initially and on window resize
@@ -61,3 +61,4 @@ provide("Categories", categoriesData);
   box-sizing: border-box; //set the box-sizing property to border-box to include padding and borders
 }
 </style>
+./composable/api.ts

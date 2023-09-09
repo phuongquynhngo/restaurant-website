@@ -8,12 +8,12 @@
         <Menu />
       </div>
       <div class="cart-container">
-      <div class="cart-column">
-        <Cart :class="{ 'fixed-cart': isCartFixed }" />
+        <div class="cart-column">
+          <Cart :class="{ 'fixed-cart': isCartFixed }" />
+        </div>
       </div>
     </div>
-    </div>
-    <div v-if="isSmallScreenStore.smallScreen">
+    <div  v-if="isSmallScreenStore.smallScreen">
       <Menu />
       <Cart v-if="cartShowStore.shown" />
     </div>
@@ -68,11 +68,7 @@ onUnmounted(() => {
   min-height: 100vh; /* Ensure the content takes at least the full viewport height */
   .content {
     display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 5px;
-    align-items: flex-start;
-    flex: 1;
-  
+    grid-template-columns: 1fr 33vw; /* The first column takes up all available space, the second column adjusts to content width */
   }
 }
 
@@ -80,10 +76,10 @@ onUnmounted(() => {
   position: fixed;
   top: 0;
   width: 100%;
-  z-index: 2;
+  z-index: 5;
 }
 .fixed-cart {
-  position: fixed;
+  position:  fixed;
   width: 33vw;
   top: 60px;
   bottom: 0;

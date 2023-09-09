@@ -53,7 +53,7 @@
     <!-- <div class="order-checkout-btn">Bestellen</div> -->
     <RouterLink
       class="order-checkout-btn"
-      v-if="sortedSelectedItems.length > 0"
+      v-if="sortedSelectedItems.length > 0 && $route.path == '/'"
       :to="sortedSelectedItems.length > 0 && totalSum > 15 ? '/checkout' : ''"
       @click="showMessageIfNotQualifiedToCheckout"
     >
