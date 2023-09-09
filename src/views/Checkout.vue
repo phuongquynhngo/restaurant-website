@@ -56,6 +56,7 @@ import { reactive } from "vue";
 import api from "../composable/api.ts";
 import Cart from "../components/Cart/Cart.vue";
 import Footer from "../components/Footer/Footer.vue";
+import { useVuelidate } from "@vuelidate/core";
 
 import { useIsSmallScreenStore } from "../stores/isSmallScreenStore";
 let isSmallScreenStore = useIsSmallScreenStore();
@@ -100,6 +101,10 @@ const createNewOrder = async () => {
     // Handle success, e.g., show a success message
     if (res.data.success) {
       console.log("Order created successfully", res.data);
+      basketStore.clearItems();
+      order.name = "";
+      order.email = "";
+      order.address = "";
     }
   } catch (error) {
     // Handle error, e.g., show an error message

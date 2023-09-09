@@ -1,7 +1,10 @@
 <template>
-  <div class="order-wrapper" :class="{
-    'small-screen-order-wrapper': isSmallScreenStore.smallScreen
-  }">
+  <div
+    class="order-wrapper"
+    :class="{
+      'small-screen-order-wrapper': isSmallScreenStore.smallScreen,
+    }"
+  >
     <div class="order-header">Your Order</div>
     <hr />
     <div v-if="isSmallScreenStore.smallScreen" class="close-icon" @click="cartShowStore.shown = false">
@@ -55,7 +58,7 @@
       class="order-checkout-btn"
       v-if="sortedSelectedItems.length > 0 && $route.path == '/'"
       :to="sortedSelectedItems.length > 0 && totalSum > 15 ? '/checkout' : ''"
-      @click="showMessageIfNotQualifiedToCheckout"
+      @click="showMessageNotQualifiedOrToCheckout"
     >
       <div>Continue to checkout</div></RouterLink
     >
@@ -71,7 +74,7 @@ import { useCartShowStores } from "../../stores/cartShowStores";
 import { useBasketStore } from "../../stores/basketStore";
 import { Item } from "../../models/Item";
 
-let isSmallScreenStore =  useIsSmallScreenStore();
+let isSmallScreenStore = useIsSmallScreenStore();
 let cartShowStore = useCartShowStores();
 const basketStore = useBasketStore();
 
@@ -99,11 +102,13 @@ const removeItem = (item: Item) => {
   basketStore.removeItem(item);
 };
 
-const showMessageIfNotQualifiedToCheckout = () => {
+const showMessageNotQualifiedOrToCheckout = () => {
   if (totalSum.value < 15) {
     // Show a message to the user that the total is not enough for checkout
     alert("Minimum order for checkout is 15 euros.");
-  } 
+  } else {
+    cartShowStore.shown = false;
+  }
 };
 </script>
 <style scoped lang="scss">
@@ -115,6 +120,4 @@ const showMessageIfNotQualifiedToCheckout = () => {
   right: 0;
   bottom: 0;
 }
-
-
 </style>
