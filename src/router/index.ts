@@ -4,7 +4,7 @@ const router = createRouter({
   history: createWebHistory(),
   routes: [
     {
-      path: '/',
+      path: '',
       name: 'Home',
       component: () => import('../views/HomeView.vue')
     },
@@ -20,8 +20,13 @@ const router = createRouter({
       },
       {
         path: '/checkout',
-        name: 'checkout',
+        name: 'Checkout',
         component: () => import('../views/Checkout.vue')
+      },
+      {
+        path: '/order-confirmation',
+        name: 'OrderConfirmation',
+        component: () => import('../views/OrderConfirmation.vue')
       },
 
 

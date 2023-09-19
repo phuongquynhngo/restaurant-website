@@ -17,7 +17,7 @@
       <Menu />
       <Cart v-if="cartShowStore.shown" />
     </div>
-    <Footer v-if="isSmallScreenStore.smallScreen" />
+    <CartFooter v-if="isSmallScreenStore.smallScreen" />
   </div>
 </template>
 
@@ -26,7 +26,7 @@ import NavbarMenu from "../components/NavbarMenu/NavbarMenu.vue";
 import Menu from "../components/Menu/Menu.vue";
 import { ref, onMounted, onUnmounted } from "vue";
 import { useHeaderHeightStore } from "../stores/headerHeightStore";
-import Footer from "../components/Footer/Footer.vue";
+import CartFooter from "../components/CartFooter/CartFooter.vue";
 import Cart from "../components/Cart/Cart.vue";
 
 import { useIsSmallScreenStore } from "../stores/isSmallScreenStore";
@@ -82,7 +82,7 @@ onUnmounted(() => {
   position:  fixed;
   width: 33vw;
   top: 60px;
-  bottom: 0;
+  bottom: 10rem;
   right: 0;
   box-sizing: border-box;
 }

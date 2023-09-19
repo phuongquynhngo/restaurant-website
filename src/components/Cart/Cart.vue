@@ -66,7 +66,7 @@
 </template>
 <script setup lang="ts">
 import { computed } from "vue";
-import CartIcon from "../Footer/icons/cart.svg";
+import CartIcon from "../CartFooter/icons/cart.svg";
 import CloseIcon from "../Header/NavbarHeader/icons/close.svg";
 import TrashIcon from "./icons/trash.svg";
 import { useIsSmallScreenStore } from "../../stores/isSmallScreenStore";

@@ -17,6 +17,7 @@ hr {
   align-items:center;
   transition: box-shadow 0.4s ease-in-out;
   border: 2px solid white;
+  padding-bottom: 5rem;
   .order-header {
     padding: 1.5rem;
     font-size: 1.25rem;
@@ -132,7 +133,7 @@ hr {
     padding: 1rem;
     width: calc(100% - 5rem);
     color: #ffffff;
-    background-color: #d0dce0;
+    background-color: #2c6373;
     text-align: center;
     border-radius: 10px;
     user-select: none;

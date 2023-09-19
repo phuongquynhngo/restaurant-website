@@ -35,7 +35,7 @@
       </div>
 
       <div class="cart-footer">
-        <Footer v-if="isSmallScreenStore.smallScreen" />
+        <CartFooter v-if="isSmallScreenStore.smallScreen" />
       </div>
     </div>
 
@@ -49,14 +49,19 @@
       <Cart class="checkout-summary-smallScreen" />
     </div>
   </div>
+  
 </template>
 
 <script setup lang="ts">
 import { reactive } from "vue";
 import api from "../composable/api.ts";
 import Cart from "../components/Cart/Cart.vue";
-import Footer from "../components/Footer/Footer.vue";
-import { useVuelidate } from "@vuelidate/core";
+import CartFooter from "../components/CartFooter/CartFooter.vue";
+//import { useVuelidate } from "@vuelidate/cor";
+import { OrderItem } from "../models/OrderItem";
+
+import { useRouter } from 'vue-router';
+const router = useRouter();
 
 import { useIsSmallScreenStore } from "../stores/isSmallScreenStore";
 let isSmallScreenStore = useIsSmallScreenStore();
@@ -65,8 +70,9 @@ import { useCartShowStores } from "../stores/cartShowStores";
 let cartShowStore = useCartShowStores();
 
 import { useBasketStore } from "../stores/basketStore";
-import { OrderItem } from "../models/OrderItem";
 const basketStore = useBasketStore();
+
+
 
 // Initialize customer object with empty values
 const order = reactive({
@@ -97,7 +103,7 @@ const createNewOrder = async () => {
       customerAddress: order.address,
       products: order.products,
     });
-
+   
     // Handle success, e.g., show a success message
     if (res.data.success) {
       console.log("Order created successfully", res.data);
@@ -105,6 +111,9 @@ const createNewOrder = async () => {
       order.name = "";
       order.email = "";
       order.address = "";
+
+      // Redirect to the confirmation page
+      router.push({ name: 'OrderConfirmation' });
     }
   } catch (error) {
     // Handle error, e.g., show an error message
@@ -112,7 +121,6 @@ const createNewOrder = async () => {
   }
 };
 
-// ... (existing code)
 </script>
 
 <style scoped lang="scss">
@@ -189,7 +197,7 @@ const createNewOrder = async () => {
   margin-top: 1rem;
   button {
     padding: 1rem 2rem;
-    background-color: #155264;
+    background-color: #2c6373;
     color: white;
     font-size: 1rem;
     border: none;
@@ -198,7 +206,7 @@ const createNewOrder = async () => {
     transition: background-color 0.3s;
 
     &:hover {
-      background-color: #104150;
+      background-color: #155264;
     }
   }
 }

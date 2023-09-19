@@ -4,9 +4,10 @@ import { ref, provide, onBeforeMount } from "vue";
 import Header from "./components/Header/Header.vue";
 import { Category } from "./models/Category.ts";
 import { Item } from "./models/Item.ts";
+import Footer from "./components/Footer/Footer.vue";
 
 import { useIsSmallScreenStore } from "./stores/isSmallScreenStore";
-let isSmallScreenStore =  useIsSmallScreenStore();
+let isSmallScreenStore = useIsSmallScreenStore();
 
 // Detect if the screen is small
 const checkScreenSize = () => {
@@ -22,7 +23,7 @@ const fetchCategories = async () => {
   try {
     const response = await api.get("/api/categories/");
     categoriesData.value = response.data;
-    console.log("categories:", categoriesData.value);
+    //console.log("categories:", categoriesData.value);
   } catch (error) {
     console.log("Error fetching categories:", error);
   }
@@ -32,7 +33,7 @@ const fetchItems = async () => {
   try {
     const response = await api.get("/api/items/");
     itemsData.value = response.data;
-    console.log("items:", itemsData.value);
+    //console.log("items:", itemsData.value);
   } catch (error) {
     console.log("Error fetching items:", error);
   }
@@ -43,22 +44,28 @@ onBeforeMount(async () => {
 
 provide("Items", itemsData);
 provide("Categories", categoriesData);
-
-
 </script>
 
 <template>
   <div class="container">
     <Header />
     <RouterView />
+    <Footer class="footer" />
   </div>
 </template>
 
 <style scoped lang="scss">
 .container {
-  width: 100%;
+  position: relative;
   margin: 0;
   box-sizing: border-box; //set the box-sizing property to border-box to include padding and borders
+  min-height: 100vh;
+  
+  .footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    box-sizing: border-box;
+  }
 }
 </style>
-./composable/api.ts

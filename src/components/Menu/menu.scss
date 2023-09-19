@@ -1,10 +1,12 @@
 .menu-wrapper{
-    margin-bottom: 5rem;
+    padding-bottom: 10rem;
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
-
+    @media only screen and (max-width: 1280px) {
+        margin-bottom: 5rem; 
+      }
     .categories{
         width: calc(100% - 4rem);
     }
