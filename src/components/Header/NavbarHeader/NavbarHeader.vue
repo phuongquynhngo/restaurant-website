@@ -6,7 +6,7 @@
     <div class="navbar-header-items">
       <RouterLink class="navbar-header-item" to="/" @click="$emit('close')"> <div class="navbar-header-item-label">Menu</div></RouterLink>
       <RouterLink class="navbar-header-item" to="/about" @click="$emit('close')"><div class="navbar-header-item-label">About</div></RouterLink>
-      <RouterLink class="navbar-header-item" to="/contact" @click="$emit('close')"> <div class="navbar-header-item-label">Contact</div></RouterLink>
+      <!-- <RouterLink class="navbar-header-item" to="/contact" @click="$emit('close')"> <div class="navbar-header-item-label">Contact</div></RouterLink> -->
     </div>
   </div>
 </template>

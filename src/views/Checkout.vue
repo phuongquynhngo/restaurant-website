@@ -129,10 +129,14 @@ const createNewOrder = async () => {
   display: grid;
   grid-template-columns: 1fr auto; /* The first column takes up all available space, the second column adjusts to content width */
   gap: 1rem;
-
-  margin-bottom: 5rem;
+  padding-bottom: 10rem; 
   width: 100%;
   box-sizing: border-box;
+  min-height: 100vh;
+  @media only screen and (max-width: 1280px) {
+        padding-bottom: 15rem; 
+      }
+  
 }
 
 .checkout-infos {

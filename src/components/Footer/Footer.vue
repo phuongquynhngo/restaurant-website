@@ -4,7 +4,7 @@
       <div class="section-links">
         <router-link to="/">Menu</router-link>
         <router-link to="/about">About Us</router-link>
-        <router-link to="/contact">Contact</router-link>
+        <!-- <router-link to="/contact">Contact</router-link> -->
       </div>
       <div :class="contactInfoClasses">
         <p>123 Restaurant Street, Cityville</p>
@@ -43,7 +43,7 @@ const wrapperClasses = computed(() => {
   if (currentRoute !== undefined && currentRoute !== null) {
     return {
       "footer-wrapper": true,
-      "small-screen": isSmallScreenStore.smallScreen && currentRoute === "Home",
+      "small-screen": isSmallScreenStore.smallScreen && (currentRoute === "Home" || currentRoute === "Checkout"),
     };
   }
 });
